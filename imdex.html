@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prompt Agent</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f7f7f7;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Roman Urdu se English Prompt Generator</h1>
+  
+  <label for="input">Apni design ki logic Roman Urdu mein likhein:</label>
+  <textarea id="input" rows="4" placeholder="e.g., mujhe aik ai assistant banana hai jo resume banaye"></textarea>
+  
+  <button onclick="generatePrompt()">Generate Prompt</button>
+  
+  <div id="result"></div>
+
+  <script>
+    async function generatePrompt() {
+      const input = document.getElementById('input').value;
+
+      const response = await fetch('http://localhost:3000/generate-prompt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ romanUrdu: input })
+      });
+
+      const data = await response.json();
+      document.getElementById('result').innerText = 'English Prompt: ' + data.prompt;
+    }
+  </script>
+
+</body>
+</html>
