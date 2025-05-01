@@ -1,4 +1,3 @@
-// index.js
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -10,11 +9,12 @@ app.use(cors());
 
 const PORT = 3000;
 
-// ✅ New route for GET /
+// ✅ GET route to check server
 app.get("/", (req, res) => {
   res.send("Prompt Agent Server is Running ✅");
 });
 
+// ✅ POST route to generate prompt from Roman Urdu
 app.post("/generate-prompt", async (req, res) => {
   const userInput = req.body.romanUrdu;
 
@@ -50,6 +50,14 @@ app.post("/generate-prompt", async (req, res) => {
   }
 });
 
+// ✅ NEW: Webhook listener route
+app.post("/webhook", (req, res) => {
+  console.log("✅ Webhook received:", req.body);
+
+  // You can perform further processing here (save to DB, call another API, etc.)
+  res.status(200).send("Webhook received successfully.");
+});
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
